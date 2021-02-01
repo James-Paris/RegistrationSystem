@@ -1,6 +1,8 @@
 package web;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,17 +27,29 @@ public class LoginServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		// Setting up the content type of web page
+        resp.setContentType("text/html");
+        // Writing the message on the web page
+        PrintWriter out = resp.getWriter();
+        out.println("<h3>Login:</h3>");
+        
+        out.println("<form action='' method='POST'>");
+        out.println("<label>Username: <input type='text' name='user' minlength='3' required></input></label><br>");
+        out.println("<label>Password: <input type='password' name='pass' minlength='3' required></input></label><br>");
+        out.println("<input type='submit'></input>");
+        out.println("</form>");
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		PrintWriter out = resp.getWriter();
+		out.println("<h3>Loading...</h3>");
+        
+		doGet(req, resp);
 	}
 
 }
