@@ -1,0 +1,49 @@
+<web-app>
+    <display-name>AddProd</display-name>
+    
+    <servlet>
+        <servlet-name>vanilla</servlet-name>
+        <servlet-class>web.MyGenericServlet</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>RegisterServlet</servlet-name>
+        <servlet-class>web.RegisterServlet</servlet-class>
+    </servlet>
+    <servlet>
+    	<servlet-name>LoginServlet</servlet-name>
+    	<servlet-class>web.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>RegisterServlet</servlet-name>
+        <url-pattern>/register</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>vanilla</servlet-name>
+        <url-pattern>/vanilla</url-pattern>
+    </servlet-mapping>
+ 
+    <filter>
+        <filter-name>logging-filter</filter-name>
+        <filter-class>widgetstore.web.LoggingFilter</filter-class>
+       
+    </filter>
+    <filter-mapping>
+        <filter-name>logging-filter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <filter>
+        <filter-name>need-permission</filter-name>
+        <filter-class>web.NeedPermissionFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>need-permission</filter-name>
+        <url-pattern>/drinks</url-pattern>
+    </filter-mapping>
+</web-app>
