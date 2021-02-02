@@ -34,14 +34,14 @@ public class LoginServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {	
 		// Setting up the content type of web page
         resp.setContentType("text/html");
         // Writing the message on the web page
         PrintWriter out = resp.getWriter();
         out.println("<h3>Login:</h3>");
         
+        //login form
         out.println("<form action='' method='POST'>");
         out.println("<label>Username: <input type='text' name='user' minlength='3' required></input></label><br>");
         out.println("<label>Password: <input type='password' name='pass' minlength='3' required></input></label><br>");
@@ -54,8 +54,6 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		PrintWriter out = resp.getWriter();
-		//out.println("<h3>Loading...</h3>");
-        
 		String checkUser = req.getParameter("user");
 		String checkPass = req.getParameter("pass");
 		
@@ -78,31 +76,14 @@ public class LoginServlet extends HttpServlet {
 			if(checkPass.equals(fetchedData.getPass())) {
 				//user exists and passwords match! Log the user in and redirect:
 				out.println("<h3>Login Successful! Redirecting...</h3>");
-				successfulLogin(req, resp);
+				resp.setHeader("Refresh", "5; URL=http://localhost:8050/widgets/theforums");
 			} else {
+				//the passwords do not match
 				out.println("<h3>Invalid login credentials. Please try again!</h3>");
 				doGet(req, resp);
-				//passwords did not match. handle that now
-			}
-			
-			
-			
+			}	
 		}
-				
-		
-		//doGet(req, resp);
-	}
-	
-		protected void successfulLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-			
-			// Setting up the content type of web page
-	        resp.setContentType("text/html");
-	        // Writing the message on the web page
-	        PrintWriter out = resp.getWriter();
-			resp.setHeader("Refresh", "5; URL=http://localhost:8050/widgets/theforums");
-	    	
-			
-		}
-		
 
+	}
+		
 }

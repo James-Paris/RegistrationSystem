@@ -27,10 +27,11 @@ public class RegisterServlet extends HttpServlet {
         // Writing the message on the web page
         PrintWriter out = resp.getWriter();
         out.println("<h3>Required Information:</h3>");
-        
+      
+        //registration form
         out.println("<form action='' method='POST'>");
         out.println("<label>Username: <input type='text' name='user' minlength='3' required></input></label><br>");
-        out.println("<label>Password: <input type='text' name='pass' minlength='3' required></input></label><br>");
+        out.println("<label>Password: <input type='password' name='pass' minlength='3' required></input></label><br>");
         out.println("<input type='submit'></input>");
         out.println("</form>");
         
@@ -51,7 +52,6 @@ public class RegisterServlet extends HttpServlet {
     	Query query = session.createQuery("from UserEntity where username = :usr ", UserEntity.class);
         query.setParameter("usr", user);
     	
-  
     	List results = query.list();
     	if(!results.isEmpty()) {
     		//user already exists. so it fails.
@@ -64,26 +64,13 @@ public class RegisterServlet extends HttpServlet {
         	newUser.setUser(user);
         	newUser.setPass(pass);
         	session.save(newUser);
-
-        	
-        	out.println("<h3>You have Successfully Registered! Redirecting. . . </h3>");
-        	
-        	session.getTransaction().commit();
-        	
-            this.redirect(req, resp);
+			session.getTransaction().commit();
+			
+			//inform the user that it worked and redirect back to index page
+        	out.println("<h3>You have Successfully Registered! Redirecting... </h3>");
+        	resp.setHeader("Refresh", "5; URL=http://localhost:8050/widgets/");
     	}
     	
-    }
-    
-    protected void redirect(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException { 
-    	
-    	// Setting up the content type of web page
-        resp.setContentType("text/html");
-        // Writing the message on the web page
-        PrintWriter out = resp.getWriter();
-
-    	resp.setHeader("Refresh", "5; URL=http://localhost:8050/widgets/");
-    	//resp.sendRedirect("../widgets");
     }
 
 }
